@@ -1,0 +1,32 @@
+
+  /* Content section styles */
+  .content-section {
+    margin-top: 20px;
+  }
+  
+  /* Category section styles */
+  .category-section {
+    margin-bottom: 30px;
+  }
+  
+  /* Category title styles */
+  .category-title {
+    color: #16bc3a; /* Blue color for category titles */
+  }
+  
+  /* Product card styles */
+  .card {
+    border: 1px solid #ced4da; /* Light gray border */
+    border-radius: 0.25rem; /* Rounded corners */
+    margin-bottom: 20px; /* Bottom margin for spacing */
+  }
+  
+  /* Form styles */
+  .form-label {
+    font-weight: bold;
+  }
+  
+  .form-control {
+    width: 100%;
+    margin-bottom: 15px;
+  }

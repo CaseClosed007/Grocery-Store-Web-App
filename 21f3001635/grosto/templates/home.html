@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='home.css')}}">
+{% endblock %}
+{% block content %}
+    <h1 class="content-section">Welcome to My Grocery Store</h1>
+    <div class="content-section">
+        {% for category in categories %}
+            <div class="category-section">
+                <h2 class="category-title">{{ category.c_name }}</h2>
+                <div class="row">
+                    {% for product in products %}
+                        {% if product.category == category.c_name %}
+                            <div class="col-lg-4 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 class="card-title">{{ product.p_name }}</h3>
+                                        {% if product.stock > 0 %}
+                                            <span class="badge bg-success">In Stock</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Out of Stock</span>
+                                        {% endif %}
+                                        <form action="{{ url_for('add_to_cart') }}" method="POST">
+                                            {% if product.stock > 0 %}
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
+                                                                Quantity
+                                                            </div>
+                                                            <div class="col-lg-12">
+                                                                {{ form.csrf_token }}
+                
+                                                                {{ form.quantity(class='form-control', type='number', min=1, max=product.stock, step=1, value=1) }}
+                
+                                                                {{ form.id(value=product.p_id) }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                            <div class="panel-footer">
+                                                {% if product.stock > 0 %}
+                                                    <button type="submit" class="btn btn-success">
+                                                        <i class="glyphicon glyphicon-shopping-cart"></i> Add To Cart
+                                                    </button>
+                                                {% endif %}
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="row mt-5">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <p>At <strong>Grosto</strong>, we offer 24 hours service.</p>
+                    <p>We offer top quality groceries at minimal prices.</p>
+                    <p>All our products are fresh and of the highest quality.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

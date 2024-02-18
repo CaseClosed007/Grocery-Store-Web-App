@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {%if title%}
+      <title>Grocery Store - {{title}}</title>
+    {%else%}
+      <title>Grocery Store</title>
+    {%endif %}
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='main.css')}}">
+    {% block extra_css %}{% endblock %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  </head>
+  <body>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{url_for('home')}}">GROSTO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link disabled">Offers</a>
+              </li>
+            </ul>
+            <div class="d-flex justify-content-end mt-3">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {%if current_user.is_authenticated%}
+                  <form method="POST" class="my-2 my-lg-0 d-flex" role="search" action="{{url_for('search')}}">
+                    <input class="form-control mr-sm-2" type="search" name="searched" placeholder="Search for categories or products" aria-label="Search">
+                    <div class="form-group">
+                      {{form_s.submit(class="btn btn-outline-success")}}
+                    </div>
+                  </form>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{url_for('logout')}}">Logout</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{url_for('cart')}}">YourCart</a>
+                  </li>
+                {%else%}
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{url_for('login')}}">Login</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{url_for('register')}}">Register</a>
+                  </li>
+                {%endif%}
+              </ul>
+            </div>
+          </div>
+        </div>
+    </nav>
+    {%with messages = get_flashed_messages(with_categories=true)%}
+      {%if messages%}
+        {%for category,message in messages%}
+          <div class='alert alert-{{category}}'>
+            {{message}}
+          </div>
+        {%endfor%}
+      {%endif%}
+    {%endwith%}
+    {% block content %}
+    {%endblock%}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>
